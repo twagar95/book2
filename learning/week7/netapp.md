@@ -9,31 +9,31 @@ Tableau
 # Authors
 
 This report is prepared by
-* [Full name](link to github account)
-* [Full name](link to github account)
-* [Full name](link to github account)
-* [Full name](link to github account)
-* [Full name](link to github account)
+* [Tristan Wagar](www.github.com/twagar95)
+* [John Murphy](www.github.com/johnmurph27)
+* [Nicole Woytarowicz](www.github.com/nicolele)
+* [Satchel Spencer](www.github.com/satchelspencer)
+* [Sushant Mittal](www.github.com/sumi6109)
 
-# (Question)
+#What is the average delta?
 
-(answer)
+![screenshot](avgdelta.png)
 
-# (Question)
+#Which release contains the most entries with a non 24 hour period?
 
-(answer)
+![screenshot](entries.png)
 
-# (Question)
+#Which release has the longest observation period on average?
 
-(answer)
+![screenshot](avgdeltas.png)
 
-# (Question)
+#Which system took most time to transmit the data?
 
-(answer)
+![screenshot](image.png)
 
-# (Question)
+#What are the proble systems, those with the lowest percentage of useable data?
 
-(answer)
+![screenshot](problem.png)
 
 # Further Analysis
 
