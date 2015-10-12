@@ -44,9 +44,17 @@ $('button#shorter').click(function(){
 
 // TODO: add an event handler for the "Red" button to set the background color
 // of the viz block to red
+$('button#red').click(function(){
+    console.log('red button clicked')
+    $('.myviz').css('background-color','#FF0000')
+})
 
 // TODO: add an event handler for the "Green" button to set the background color
 // of the viz block to green
+$('button#green').click(function(){
+    console.log('red button clicked')
+    $('.myviz').css('background-color','#009933')
+})
 
 $('button#onebar').click(function(){
     var svg = "<svg><rect height='50' width='10'></rect></svg>"
@@ -59,7 +67,14 @@ $('button#twobars').click(function(){
 })
 
 // TODO: add an event handler for the "Five Bars" button to display five bars
-
+$('button#fivebars').click(function(){
+    console.log('five bars clicked')
+    var svg = "<svg><rect height='50' width='10'/><rect height='50' width='10' x='30'/><rect height='50' width='10' x='50'/><rect height='50' width='10' x='70'/><rect height='50' width='10' x='90'/></svg>"
+    $('.myviz').html(svg)
+})
 // TODO: add an event handler for the "Five Green Bars" button to display five green bars
-
+$('button#fivegreenbars').click(function(){
+    var svg = "<svg><rect height='50' width='10' style='fill:green'/><rect height='50' width='10' x='20'style='fill:green'/><rect height='50' width='10' x='50'style='fill:green'/><rect height='50' width='10' x='70'style='fill:green'/><rect height='50' width='10' x='90'style='fill:green'/></svg>"
+    $('.myviz').html(svg)
+})
 {% endscript %}
