@@ -68,7 +68,7 @@
     <body>
         <!-- body:start -->
         
-    <div class="book" data-level="1.2.4" data-basepath="../.." data-revision="Sun Oct 18 2015 22:23:08 GMT-0600 (MDT)">
+    <div class="book" data-level="1.2.4" data-basepath="../.." data-revision="Mon Oct 19 2015 14:07:47 GMT-0600 (MDT)">
     
 
 <div class="book-summary">
@@ -459,10 +459,110 @@
                 
                     <section class="normal" id="section-">
                     
-                        <h1 id="individual-3-of-3">Individual 3 of 3</h1>
-<h2 id="-question-class">(Question class)</h2>
-<p>(fill in the rest to provide an interactive visualization interface for
-    this question class)</p>
+                        <h1 id="individual-1-of-3">Individual 1 of 3</h1>
+<h2 id="what-percentage-of-businesses-in-category-x-with-a-rating-lower-than-y-stars-are-still-in-business">What percentage of businesses in category X with a rating lower than Y stars are still in business?</h2>
+<div style="border:1px grey solid; padding:5px;">
+    <div><h5>Type of Business</h5>
+        <input id="type" type="text" value="Restaurants">
+    </div>
+    <div><h5>City Name</h5>
+        <input id="stars" type="text" value="2">
+    </div>  
+    <div style="margin:20px;">
+        <button id="viz">Vizualize</button>
+    </div>
+</div>
+
+<div class="myviz" style="width:100%; height:500px; border: 1px black solid; padding: 5px;">
+Data is not loaded yet
+</div>
+
+<p><pre><code>items = &apos;not loaded yet&apos;
+
+$.get(&apos;http://bigdatahci2015.github.io/data/yelp/yelp_academic_dataset_business.5000.json.lines.txt&apos;)
+    .success(function(data){        
+        var lines = data.trim().split(&apos;\n&apos;)
+
+        // convert text lines to json arrays and save them in `items`
+        items = _.map(lines, JSON.parse)
+
+        console.log(&apos;number of items loaded:&apos;, items.length)
+
+        console.log(&apos;first item&apos;, items[0])
+     })
+     .error(function(e){
+         console.error(e)
+     })
+
+function viz(stars, type){    
+
+    // define a template string
+    var tplString = &apos;&lt;g transform=&quot;translate(0 ${d.y})&quot;&gt; \
+                    &lt;text y=&quot;20&quot; x=&quot;0&quot;&gt;${d.label}&lt;/text&gt; \
+                    &lt;rect x=&quot;200&quot;   \
+                         width=&quot;${d.width}&quot; \
+                         height=&quot;20&quot;    \
+                         style=&quot;fill:${d.color};    \
+                                stroke-width:1; \
+                                stroke:rgb(0,0,0)&quot; /&gt;   \
+                    &lt;/g&gt;&apos;
+
+    // compile the string to get a template function
+    var template = _.template(tplString)
+
+    var openFilter = _.filter(items, function(d) {
+        return ((d.stars &lt;= stars) &amp;&amp; _.includes(d.categories, type)) &amp;&amp; d.open == true
+    })
+
+    var cities = _.pairs(_.groupBy(openFilter, &apos;city&apos;))
+
+    console.log(&apos;cities&apos;, cities)
+    
+    function computeX(d, i) {
+        return 0
+    }
+
+    function computeWidth(d, i) {        
+        return _.size(d[1])
+    }
+
+    function computeY(d, i) {
+        return i * 20
+    }
+
+    function computeColor(d, i) {
+        return &apos;red&apos;
+    }
+
+    function computeLabel(d, i) {
+        return d[0] + &apos; has  &apos; + _.size(d[1]) + &apos; &apos; + type + &apos;.&apos;
+    }
+
+    var viz = _.map(cities, function(d, i){                
+                return {
+                    x: computeX(d, i),
+                    y: computeY(d, i),
+                    width: computeWidth(d, i),
+                    color: computeColor(d, i),
+                    label: computeLabel(d, i),
+                }
+             })
+    console.log(&apos;viz&apos;, viz)
+
+    var result = _.map(viz, function(d){
+             // invoke the compiled template function on each viz data
+             return template({d: d})
+         })
+    console.log(&apos;result&apos;, result)
+
+    $(&apos;.myviz&apos;).html(&apos;&lt;svg width=&quot;100%&quot; height=&quot;100%&quot;&gt;&apos; + result + &apos;&lt;/svg&gt;&apos;)
+}
+
+$(&apos;button#viz&apos;).click(function(){    
+    var stars = $(&apos;#stars&apos;).val()
+    var type = $(&apos;#type&apos;).val()   
+    viz(stars, type)
+})</code></pre><script>var code ="items = 'not loaded yet'\n\n$.get('http://bigdatahci2015.github.io/data/yelp/yelp_academic_dataset_business.5000.json.lines.txt')\n    .success(function(data){        \n        var lines = data.trim().split('\\n')\n\n        // convert text lines to json arrays and save them in `items`\n        items = _.map(lines, JSON.parse)\n\n        console.log('number of items loaded:', items.length)\n\n        console.log('first item', items[0])\n     })\n     .error(function(e){\n         console.error(e)\n     })\n\nfunction viz(stars, type){    \n\n    // define a template string\n    var tplString = '<g transform=\"translate(0 ${d.y})\"> \\\n                    <text y=\"20\" x=\"0\">${d.label}</text> \\\n                    <rect x=\"200\"   \\\n                         width=\"${d.width}\" \\\n                         height=\"20\"    \\\n                         style=\"fill:${d.color};    \\\n                                stroke-width:1; \\\n                                stroke:rgb(0,0,0)\" />   \\\n                    </g>'\n\n    // compile the string to get a template function\n    var template = _.template(tplString)\n\n    var openFilter = _.filter(items, function(d) {\n        return ((d.stars <= stars) && _.includes(d.categories, type)) && d.open == true\n    })\n\n    var cities = _.pairs(_.groupBy(openFilter, 'city'))\n\n    console.log('cities', cities)\n    \n    function computeX(d, i) {\n        return 0\n    }\n\n    function computeWidth(d, i) {        \n        return _.size(d[1])\n    }\n\n    function computeY(d, i) {\n        return i * 20\n    }\n\n    function computeColor(d, i) {\n        return 'red'\n    }\n\n    function computeLabel(d, i) {\n        return d[0] + ' has  ' + _.size(d[1]) + ' ' + type + '.'\n    }\n\n    var viz = _.map(cities, function(d, i){                \n                return {\n                    x: computeX(d, i),\n                    y: computeY(d, i),\n                    width: computeWidth(d, i),\n                    color: computeColor(d, i),\n                    label: computeLabel(d, i),\n                }\n             })\n    console.log('viz', viz)\n\n    var result = _.map(viz, function(d){\n             // invoke the compiled template function on each viz data\n             return template({d: d})\n         })\n    console.log('result', result)\n\n    $('.myviz').html('<svg width=\"100%\" height=\"100%\">' + result + '</svg>')\n}\n\n$('button#viz').click(function(){    \n    var stars = $('#stars').val()\n    var type = $('#type').val()   \n    viz(stars, type)\n})"</script></p>
 
                     
                     </section>
