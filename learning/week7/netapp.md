@@ -15,7 +15,7 @@ This report is prepared by
 * [Satchel Spencer](www.github.com/satchelspencer)
 * [Sushant Mittal](www.github.com/sumi6109)
 
-#What is the average delta?
+#What is the average delta of each Firmware?
 
 ![screenshot](avgdelta.png)
 
